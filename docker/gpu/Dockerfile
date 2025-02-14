@@ -7,7 +7,7 @@
 
 FROM nvidia/cuda:12.4.0-runtime-ubuntu22.04 AS base
 
-LABEL org.opencontainers.image.title="Docker Image of HRC ACT-Plus-Plus for Koch"
+LABEL org.opencontainers.image.title="Docker Image of KochACT-RL"
 LABEL org.opencontainers.image.authors="yoseph.huang@gmail.com"
 LABEL org.opencontainers.image.licenses="MIT"
 
@@ -26,8 +26,9 @@ SHELL ["/bin/bash", "-c"]
 
 FROM base AS python-build
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
     cmake \ 
     curl \
     libbz2-dev \
@@ -60,6 +61,8 @@ RUN wget https://www.python.org/ftp/python/3.10.0/Python-3.10.0.tgz && \
 
 FROM base AS python-dep
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 COPY --from=python-build /usr/local/lib/python3.10 /usr/local/lib/python3.10
 COPY --from=python-build /usr/local/bin/python3.10 /usr/local/bin/python3.10
 COPY --from=python-build /usr/local/bin/pip3.10 /usr/local/bin/pip3
@@ -70,8 +73,7 @@ RUN ln -sf /usr/local/bin/python3.10 /usr/bin/python3 && \
     ln -sf /usr/local/bin/pip3.10 /usr/bin/pip
 
 # Install build tools 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
     git \
@@ -85,8 +87,7 @@ RUN git clone https://github.com/hrc-pme/lerobot.git /root/lerobot && \
     git checkout 963738d
 
 WORKDIR /root/lerobot
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get upgrade pip -y && \
+RUN pt-get update && apt-get upgrade pip -y && \
     pip install --upgrade pip && \
     pip install --no-cache-dir --ignore-installed ".[dynamixel]" 
 
@@ -99,17 +100,18 @@ RUN rm -rf lerobot
 #   - In this stage, I will install ROS2 humble and Intel Realsense dependencies.
 ################################################################################################
 
-ARG ROS_DISTRO=humble
 
 FROM python-dep AS ros-humble-base
+
+ARG DEBIAN_FRONTEND=noninteractive
+ARG ROS_DISTRO=humble
 
 RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o \
         /usr/share/keyrings/ros-archive-keyring.gpg && \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" \
         | tee /etc/apt/sources.list.d/ros2.list > /dev/null 
     
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+RUN apt-get update && apt-get install -y \
     python3-colcon-common-extensions \
     python3-rosdep \
     ros-$ROS_DISTRO-ros-base \

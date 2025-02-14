@@ -1,4 +1,4 @@
-name: lerobot-koch-actpp gpu image
+name: KochACT-RL gpu image
 
 on:
   push:
