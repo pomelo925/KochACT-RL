@@ -7,20 +7,22 @@ from lerobot.common.robot_devices.robots.manipulator import ManipulatorRobot
 import numpy as np
 import yaml
 
+config_file_path = "/root/ros2-ws/src/koch_ros2_wrapper/config/two_leader_follower.yaml"
+calibration_file_path="/root/ros2-ws/src/koch_ros2_wrapper/calibration"
+
 class KochCalibration(Node):
     def __init__(self):
         super().__init__('motor_calibration_node')
         self.get_logger().info('\033[93mMotor Calibration Node started\033[0m')
 
-        # Declare the parameter for the config file path
-        self.declare_parameter('config_file', '/home/hrc/koch_robot_arm/ros2_ws/src/koch_ros2_wrapper/config/dual_arm.yaml')
-        config_file_path = self.get_parameter('config_file').get_parameter_value().string_value
+        self.declare_parameter('config_file', config_file_path)
+        self.config_file_path = self.get_parameter('config_file').get_parameter_value().string_value
 
         # Load configuration from the specified YAML file
         try:
-            with open(config_file_path, 'r') as file:
+            with open(self.config_file_path, 'r') as file:
                 config = yaml.safe_load(file)
-                self.get_logger().info(f'Loaded configuration from {config_file_path}')
+                self.get_logger().info(f'Loaded configuration from {self.config_file_path}')
         except Exception as e:
             self.get_logger().error(f"\033[91mFailed to load configuration file: {e}\033[0m")
             return
@@ -60,7 +62,7 @@ class KochCalibration(Node):
                 robot_type="koch",
                 leader_arms=self.leader_arms,
                 follower_arms=self.follower_arms,
-                calibration_dir="/home/hrc/koch_robot_arm/calibration/koch",
+                calibration_dir=calibration_file_path,
             )
             self.robot.connect()
             self.get_logger().info('\033[92mRobot successfully connected\033[0m')

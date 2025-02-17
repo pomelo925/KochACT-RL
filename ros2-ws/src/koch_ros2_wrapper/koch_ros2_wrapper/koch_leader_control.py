@@ -7,14 +7,17 @@ from lerobot.common.robot_devices.robots.manipulator import ManipulatorRobot
 import numpy as np
 import yaml
 
+config_file_path = "/root/ros2-ws/src/koch_ros2_wrapper/config/single_leader.yaml"
+calibration_file_path="/root/ros2-ws/src/koch_ros2_wrapper/calibration"
+
 class KochLeader(Node):
     def __init__(self):
         super().__init__('leader_control_node')
         self.get_logger().info('\033[93mLeader Control Node started\033[0m')
 
         # Declare the parameter for the config file path
-        self.declare_parameter('config_file', '/home/hrc/koch_robot_arm/ros2_ws/src/koch_ros2_wrapper/config/single_leader.yaml')
-        config_file_path = self.get_parameter('config_file').get_parameter_value().string_value
+        self.declare_parameter('config_file', config_file_path)
+        self.config_file_path = self.get_parameter('config_file').get_parameter_value().string_value
 
         # Load configuration from the specified YAML file
         try:
@@ -50,7 +53,7 @@ class KochLeader(Node):
             self.robot = ManipulatorRobot(
                 robot_type="koch",
                 leader_arms=self.leader_arms,
-                calibration_dir="/home/hrc/koch_robot_arm/calibration/koch",
+                calibration_dir=calibration_file_path,
             )
             self.robot.connect()
             self.get_logger().info('\033[92mRobot successfully connected\033[0m')

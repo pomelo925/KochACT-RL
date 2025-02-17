@@ -8,7 +8,9 @@ from lerobot.common.robot_devices.robots.manipulator import ManipulatorRobot
 
 import numpy as np
 import yaml
-import os
+
+config_file_path = "/root/ros2-ws/src/koch_ros2_wrapper/config/single_follower.yaml"
+calibration_file_path="/root/ros2-ws/src/koch_ros2_wrapper/calibration"
 
 class KochROSWrapper(Node):
     def __init__(self):
@@ -16,8 +18,8 @@ class KochROSWrapper(Node):
         self.get_logger().info('\033[93mMotor Controller Node started\033[0m')
 
         # Declare the parameter for the config file path
-        self.declare_parameter('config_file', '/home/hrc/koch_robot_arm/ros2_ws/src/koch_ros2_wrapper/config/single_follower.yaml')
-        config_file_path = self.get_parameter('config_file').get_parameter_value().string_value
+        self.declare_parameter('config_file', config_file_path)
+        self.config_file_path = self.get_parameter('config_file').get_parameter_value().string_value
 
         # Load configuration from the specified YAML file
         try:
@@ -72,7 +74,7 @@ class KochROSWrapper(Node):
             self.robot = ManipulatorRobot(
                 robot_type="koch",
                 follower_arms=self.follower_arms,
-                calibration_dir="/home/hrc/koch_robot_arm/calibration/koch",
+                calibration_dir=calibration_file_path,
             )
             # self.get_logger().info('Robot instance created, attempting to connect...')
             self.robot.connect()
