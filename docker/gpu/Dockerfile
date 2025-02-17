@@ -87,7 +87,7 @@ RUN git clone https://github.com/hrc-pme/lerobot.git /root/lerobot && \
     git checkout 963738d
 
 WORKDIR /root/lerobot
-RUN pt-get update && apt-get upgrade pip -y && \
+RUN apt-get update && apt-get upgrade pip -y && \
     pip install --upgrade pip && \
     pip install --no-cache-dir --ignore-installed ".[dynamixel]" 
 
