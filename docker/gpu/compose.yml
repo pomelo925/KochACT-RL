@@ -5,6 +5,7 @@ x-common-settings: &common
   build: 
     context: .  
     dockerfile: Dockerfile
+    target: release
   image: hrcnthu/lerobot-koch-actpp:gpu
 
   volumes:
@@ -13,15 +14,18 @@ x-common-settings: &common
     - /dev/shm:/dev/shm
 
     - ../entrypoint:/root/entrypoint
-    - ../command:/root/command
-    - ../../calibration:/root/calibration
     - ../../lerobot:/root/lerobot
-    - ../../ros2-ws:/root/ros2-ws
+    - ../../ros2-ws/build:/root/ros2-ws/build
+    - ../../ros2-ws/install:/root/ros2-ws/install
+    - ../../ros2-ws/src:/root/ros2-ws/src
+
 
     ## NOTE: mount .git to setup the git credentials
     #  you can comment out this line, 
     #  if you don't need to upload dataset to huggingface.
     - ../../.git/:/root/.git
+  tmpfs:
+    - /root/ros2-ws/log
   
   environment:
     - DISPLAY=${DISPLAY}
@@ -55,41 +59,34 @@ services:
   raw:
     <<: [*common, *gpu]
     container_name: koch-actpp-raw
-      
-    entrypoint: []
     command: ["/bin/bash"]
 
 
   ws-build:
     <<: [*common, *gpu]
     container_name: koch-actpp-ws-build
-
-    entrypoint: []
-    command: ["/root/command/ws-build.sh"]
+    entrypoint: ["/bin/bash", "-c", 
+                  "/root/entrypoint/symlinks.sh; /root/entrypoint/ws-build.sh"]
 
 
   arm-cali:
     <<: [*common, *gpu]
     container_name: koch-actpp-arm-cali
-
-    entrypoint: [/root/entrypoint/symlinks.sh"]
-    command: ["/root/command/arm-cali.sh"]
-
+    entrypoint: ["/bin/bash", "-c", 
+                  "/root/entrypoint/symlinks.sh; /root/entrypoint/arm-cali.sh"]
 
   arm-sync:
     <<: [*common, *gpu]
     container_name: koch-actpp-arm-sync
-
-    entrypoint: ["/root/entrypoint/symlinks.sh"]
-    command: ["/root/command/arm-sync.sh"]
+    entrypoint: ["/bin/bash", "-c", 
+                  "/root/entrypoint/symlinks.sh; /root/entrypoint/arm-sync.sh"]
 
   
   armv-rec:
     <<: [*common, *gpu]
     container_name: koch-actpp-armv-rec
-    
-    entrypoint: ["/root/entrypoint/symlinks.sh"]
-    command: ["/root/command/armv-rec.sh"]
+    entrypoint: ["/bin/bash", "-c", 
+                  "/root/entrypoint/symlinks.sh", "/root/entrypoint/armv-rec.sh"]
 
 
   actpp-train:

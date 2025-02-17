@@ -43,7 +43,7 @@ RUN apt-get update && apt-get install -y \
     zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Download and compile Python 3.10.0
+# Build Python 3.10.0 from source
 RUN wget https://www.python.org/ftp/python/3.10.0/Python-3.10.0.tgz && \
     tar -xvf Python-3.10.0.tgz && \
     cd Python-3.10.0 && \
@@ -89,7 +89,8 @@ RUN git clone https://github.com/hrc-pme/lerobot.git /root/lerobot && \
 WORKDIR /root/lerobot
 RUN apt-get update && apt-get upgrade pip -y && \
     pip install --upgrade pip && \
-    pip install --no-cache-dir --ignore-installed ".[dynamixel]" 
+    pip install --no-cache-dir --ignore-installed ".[dynamixel]" \
+    pip install setuptools==58.2.0
 
 WORKDIR /root
 RUN rm -rf lerobot
@@ -126,7 +127,7 @@ RUN apt-get update && apt-get install -y \
 #   - In this stage, I will install some developing tools.
 ################################################################################################
 
-# FROM ros-humble-base AS dev
+FROM ros-humble-base AS release
 
 # # Install required libraries and tools
 # RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
@@ -136,3 +137,5 @@ RUN apt-get update && apt-get install -y \
 #     libegl1-mesa \
 #     speech-dispatcher \
 #     && rm -rf /var/lib/apt/lists/*
+
+CMD ["/bin/bash"]
