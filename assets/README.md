@@ -5,7 +5,7 @@ This ensures the device always appears with a unique name, such as `/dev/tty_cha
 
 ![alt text](<tty.png>)
 
-##  <div align="center"> Koch Robot Arm </div>
+##  <div align="center"> Koch Robot Arm Symlinks </div>
 
 1. Use `sudo dmesg | grep tty` to identify the device, and check its attributes.
 
@@ -33,7 +33,7 @@ This ensures the device always appears with a unique name, such as `/dev/tty_cha
  
 ##  <div align="center"> Configurations </div>
 
-1. Adjust the config file `/lerobot/lerobot/configs/robot/koch_bimanual.yaml` if needed.
+1. Adjust the config file `KochACT-RL/lerobot/lerobot/configs/robot/koch_bimanual.yaml` if needed.
 
   ```yaml
   ## ...
@@ -52,9 +52,7 @@ This ensures the device always appears with a unique name, such as `/dev/tty_cha
   ## ...
   ```
 
-2. Since symlinks created by udev rules can't be mounted into a container.
-  We will explicitly replicate symlinks in `/docker/entrypoint/symlinks.sh`.
-  Before launching container, make sure port name corresponds to udev rules.
+2. Configure the correct ports for the Koch arm in `/docker/entrypoint/symlinks.sh`.
 
   ```sh
   ## ...
@@ -67,3 +65,5 @@ This ensures the device always appears with a unique name, such as `/dev/tty_cha
   
   ## ...
   ```
+  
+>[!NOTE] We explicitly replicate symlinks since symlinks created by udev rules can't be mounted into a container.

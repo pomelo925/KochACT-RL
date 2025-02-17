@@ -1,9 +1,16 @@
+# IDE
 .vscode
 
-## ros2 ws
+# ros2 ws
 build/
 install/
 log/
 
-## token file
+# token file
 .env
+
+# cache 
+__pycache__/
+
+# bags
+bags/

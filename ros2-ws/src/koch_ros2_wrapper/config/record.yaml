@@ -1,0 +1,11 @@
+record_settings:
+  record_time_s: 5
+  bags_folder_path: "/root/ros2-ws/src/koch_ros2_wrapper/bags"
+
+enable_cameras:
+  name:
+    - "d415_top"
+    # - "d415_right"
+    # - "d415_left"
+    # - "d415_first"
+    # - "d415_far"

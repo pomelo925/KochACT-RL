@@ -1,4 +1,3 @@
-# This file is used to configure the camera settings for the realsense cameras
 shared_settings:
   color_profile: "640,480,30"
   depth_profile: "640,480,30"
@@ -19,7 +18,7 @@ cameras:
   - name: "d415_right"
     serial_no: "241222061342"
     camera_name: "cam_right"
-    enabled: true
+    enabled: false
 
   - name: "d415_left"
     serial_no: "241222061237"
