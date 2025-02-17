@@ -81,7 +81,7 @@ RUN apt-get update && apt-get install -y \
     python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install project dependencies
+# Install lerobot dependencies
 RUN git clone https://github.com/hrc-pme/lerobot.git /root/lerobot && \
     cd /root/lerobot && \
     git checkout 963738d
@@ -116,6 +116,7 @@ RUN apt-get update && apt-get install -y \
     python3-colcon-common-extensions \
     python3-rosdep \
     ros-$ROS_DISTRO-ros-base \
+    ros-$ROS_DISTRO-image-transport-plugins \
     ros-$ROS_DISTRO-librealsense2* && \
     rosdep init && rosdep update && \
     echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc && \
