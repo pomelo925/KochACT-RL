@@ -89,8 +89,7 @@ RUN git clone https://github.com/hrc-pme/lerobot.git /root/lerobot && \
 WORKDIR /root/lerobot
 RUN apt-get update && apt-get upgrade pip -y && \
     pip install --upgrade pip && \
-    pip install --no-cache-dir --ignore-installed ".[dynamixel]" \
-    pip install setuptools==58.2.0
+    pip install --no-cache-dir --ignore-installed ".[dynamixel]"
 
 WORKDIR /root
 RUN rm -rf lerobot
