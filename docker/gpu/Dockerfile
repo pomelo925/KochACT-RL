@@ -89,7 +89,7 @@ RUN git clone https://github.com/hrc-pme/lerobot.git /root/lerobot && \
 WORKDIR /root/lerobot
 RUN apt-get update && apt-get upgrade pip -y && \
     pip install --upgrade pip && \
-    pip install --no-cache-dir --ignore-installed ".[dynamixel]"
+    pip install --no-cache-dir --ignore-installed ".[dynamixel]" 
 
 WORKDIR /root
 RUN rm -rf lerobot
@@ -129,13 +129,9 @@ RUN apt-get update && apt-get install -y \
 
 FROM ros-humble-base AS release
 
-# # Install required libraries and tools
-# RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
-#     DEBIAN_FRONTEND=noninteractive apt-get install -y \
-#     libglib2.0-0 \
-#     libgl1-mesa-glx \
-#     libegl1-mesa \
-#     speech-dispatcher \
-#     && rm -rf /var/lib/apt/lists/*
+ARG DEBIAN_FRONTEND=noninteractive
+
+## Fix some minor issues
+# RUN pip3 install setuptools==58.2.0
 
 CMD ["/bin/bash"]
