@@ -40,9 +40,15 @@ This repository is built on the [lerobot](https://github.com/hrc-pme/lerobot/tre
 
    <details> 
       <summary> spoiler Mode Options </summary>
-   
-      - We provide 8 modes: `raw`, `ws-build`, `arm-cali`, `arm-sync`, `armv-sync`, `armv-rec`, `train`, and `deploy`.   
-      - You can check details under `/docker/entrypoint`.
+
+      - `raw`:        Enter the env without running any node.  
+      - `ws-build`:   Colcon build ROS2 workspace.  
+      - `arm-cali`:   Calibrate Koch Robot Arms.  
+      - `arm-sync`:   Synchronize Koch.  
+      - `armv-sync`:  Synchronize Koch & launch Realsense.  
+      - `armv-rec`:   Record Koch and Realsense.  
+      - `train`:      Train custom dataset.  
+      - `deploy`:     Deploy custom model.  
    </details>
 
 <br/>
