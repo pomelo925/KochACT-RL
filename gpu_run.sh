@@ -1,22 +1,5 @@
 #!/bin/bash
 
-#######################################################################################
-### This script provides 8 modes to interact with the KochACT-RL environment:
-### 
-### Modes:
-###   raw:        Start the environment without running any nodes.
-###   ws-build:   Build ROS2 workspace.
-###   arm-cali:   Calibrate Koch robot arms.
-###   arm-sync:   Synchronize Koch robot arms.
-###   armv-sync:  Synchronize arms & turn on visual sensors.
-###   armv-rec:   Record Koch robot arms and visual data.
-###   train:      Train your custom dataset with the selected model.
-###   deploy:     Deploy your custom model on real robot.
-###
-### Usage:
-###   ./gpu_run.sh {raw|ws-build|arm-cali|arm-sync|armv-sync|armv-rec|train|deploy}
-#######################################################################################
-
 # Add docker to xhost
 xhost +local:docker
 
