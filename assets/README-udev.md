@@ -1,20 +1,33 @@
 # <div align="center"> Udev Rules Guide </div>
 
-Create a custom symlink for your USB device in the `/dev` directory using udev rules.
-This ensures the device always appears with a unique name, such as `/dev/tty_changeme`.
+## <div align="center"> Koch Robot Arm Symlinks </div>
 
-![alt text](<tty.png>)
+<div align="center">
 
-##  <div align="center"> Koch Robot Arm Symlinks </div>
+Create a symlink for USB devices by loading udev rules.  
+This ensures the devices always appear with unique names as shown below.
 
-1. Use `sudo dmesg | grep tty` to identify the device, and check its attributes.
+  <img src="tty.png" alt="alt text" width="70%">
+</div>
+
+---
+
+##  <div align="center"> Steps </div>
+
+### On your host machine
+
+1. Plug in Koch Robot Arm 1 by 1.
+2. Use `sudo dmesg | grep tty` to identify the device, and check its attributes.
 
   ```sh
   udevam info -a /dev/ttyACM0 | grep serial
   ```
+3. Check each device's serial number & create udev rules.
+  ```sh
+  sudo nano /etc/udev/rules.d/99-koch-arm.rules`.
+  ```
 
-2. Create a udev rules by `sudo nano /etc/udev/rules.d/99-koch-arm.rules`.
-   
+  sample:
   ```rules
   SUBSYSTEM=="tty" ATTRS{serial}=="5876043456", SYMLINK+="ttykoch_left_leader"
   SUBSYSTEM=="tty" ATTRS{serial}=="5876043359", SYMLINK+="ttykoch_right_leader"
@@ -22,7 +35,7 @@ This ensures the device always appears with a unique name, such as `/dev/tty_cha
   SUBSYSTEM=="tty" ATTRS{serial}=="5876042900", SYMLINK+="ttykoch_right_follower"
   ```
 
-3. Add the rules.
+4. Add the rules.
    
   ```rules
   sudo udevadm control --reload-rules
@@ -30,40 +43,3 @@ This ensures the device always appears with a unique name, such as `/dev/tty_cha
   ```
 
   Check if rules apply by `ls -l /dev | grep ttyACM`.
- 
-##  <div align="center"> Configurations </div>
-
-1. Adjust the config file `KochACT-RL/lerobot/lerobot/configs/robot/koch_bimanual.yaml` if needed.
-
-  ```yaml
-  ## ...
-  leader_arms:
-  left:
-    _target_: lerobot.common.robot_devices.motors.dynamixel.DynamixelMotorsBus
-    port: /dev/ttykoch_left_leader  # check if port name corresponds to udev rules
-    motors:
-      # name: (index, model)
-      shoulder_pan: [1, "xl330-m077"]
-      shoulder_lift: [2, "xl330-m077"]
-      elbow_flex: [3, "xl330-m077"]
-      wrist_flex: [4, "xl330-m077"]
-      wrist_roll: [5, "xl330-m077"]
-      gripper: [6, "xl330-m077"]
-  ## ...
-  ```
-
-2. Configure the correct ports for the Koch arm in `/docker/entrypoint/symlinks.sh`.
-
-  ```sh
-  ## ...
-  
-  # Create symlinks for the serial ports in the docker container
-  ln -sf /dev/ttyACM2 /dev/ttykoch_left_follower
-  ln -sf /dev/ttyACM1 /dev/ttykoch_left_leader
-  ln -sf /dev/ttyACM0 /dev/ttykoch_right_follower
-  ln -sf /dev/ttyACM3 /dev/ttykoch_right_leader
-  
-  ## ...
-  ```
-  
->[!NOTE] We explicitly replicate symlinks since symlinks created by udev rules can't be mounted into a container.

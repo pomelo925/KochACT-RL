@@ -9,10 +9,17 @@ x-common-settings: &common
   image: hrcnthu/lerobot-koch-actpp:gpu
 
   volumes:
+    # GUI
     - $HOME/.Xauthority:/root/.Xauthority
     - /tmp/.X11-unix:/tmp/.X11-unix
+    # ROS2 container communication
     - /dev/shm:/dev/shm
+    # Udev rules 
+    - /dev:/dev
+    - /run/udev:/run/udev:ro
+    - /etc/udev:/etc/udev:ro
 
+    # workspace 
     - ../entrypoint:/root/entrypoint
     - ../../lerobot:/root/lerobot
     - ../../ros2-ws/build:/root/ros2-ws/build
