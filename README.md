@@ -54,7 +54,7 @@ We provide 8 modes: `raw`, `ws-build`, `arm-cali`, `arm-sync`, `armv-sync`, `arm
 * `deploy`: Deploy your custom model on real robot.
 
 >[!TIP]
-These scripts are under `/docker/gpu/entrypoint`.
+These scripts are under `/docker/entrypoint`.
 
 $\;$
 
