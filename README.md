@@ -2,13 +2,16 @@
 
 This repository is built on the [lerobot](https://github.com/hrc-pme/lerobot/tree/33724a273dfa3a62b845cbbb030b21b71fc5d12b) framework to establish a software environment for the Koch arm and its peripheral devices.
 
+$\;$
+
 ##  <div align="center"> 🌱 Environment 🌱 </div>
 
-* Arm: Bimanual Koch Robot Arm v1.1. (2 leaders, 2 followers)
-* Camera: Intel® RealSense™ Depth Camera D415. (3~5 cams)
-* Computer: x86 arch, Linux OS with docker installed.
-* GPU: GPU is required and must be compatible with CUDA 12.4.
+* **Arm**: Bimanual Koch Robot Arm v1.1. (2 leaders, 2 followers)
+* **Camera**: Intel® RealSense™ Depth Camera D415. (3~5 cams)
+* **Computer**: x86 arch with Linux OS.
+* **GPU**: GPU is required and must be compatible with CUDA 12.4.
 
+$\;$
 
 ##  <div align="center"> 🛠️ Usage 🛠️ </div>
 
@@ -20,7 +23,7 @@ This repository is built on the [lerobot](https://github.com/hrc-pme/lerobot/tre
    git submodule update --init --recursive
    ```
 
-2. Follow [UdevRules.md](/assets/README.md) to setup Koch's udev rules.
+2. Follow [UdevRules.md](/assets/README-udev.md) to setup Koch's udev rules.
 
 3. (Optional) [Setup your huggingface token](https://huggingface.co/docs/hub/security-tokens) in `.env` file.
    
@@ -53,3 +56,8 @@ We provide 8 modes: `raw`, `ws-build`, `arm-cali`, `arm-sync`, `armv-sync`, `arm
 >[!TIP]
 These scripts are under `/docker/gpu/entrypoint`.
 
+$\;$
+
+##  <div align="center"> ⚠️ Issues ⚠️ </div>
+
+Before posting issues, please ensure you have attempted the troubleshooting steps outlined in [Common Errors and Solutions](/assets/README-error.md).
