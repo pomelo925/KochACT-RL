@@ -2,7 +2,7 @@
 
 This repository is built on the [lerobot](https://github.com/hrc-pme/lerobot/tree/33724a273dfa3a62b845cbbb030b21b71fc5d12b) framework to establish a software environment for the Koch arm and its peripheral devices.
 
-$\;$
+<br/>
 
 ##  <div align="center"> 🌱 Environment 🌱 </div>
 
@@ -11,7 +11,7 @@ $\;$
 * **Computer**: x86 arch with Linux OS.
 * **GPU**: GPU is required and must be compatible with CUDA 12.4.
 
-$\;$
+<br/>
 
 ##  <div align="center"> 🛠️ Usage 🛠️ </div>
 
@@ -38,26 +38,15 @@ $\;$
    ./gpu_run.sh raw
    ```
 
----
+   <details> 
+      <summary> spoiler Mode Options </summary>
+   
+      - We provide 8 modes: `raw`, `ws-build`, `arm-cali`, `arm-sync`, `armv-sync`, `armv-rec`, `train`, and `deploy`.   
+      - You can check details under `/docker/entrypoint`.
+   </details>
 
-### ✨ Container Startup Option
-
-We provide 8 modes: `raw`, `ws-build`, `arm-cali`, `arm-sync`, `armv-sync`, `armv-rec`, `train`, `deploy`.
-
-* `raw`: Start the environment without running any nodes.
-* `ws-build`: Build ROS2 workspace.
-* `arm-cali`: Calibrate Koch robot arms.
-* `arm-sync`: Synchronize Koch robot arms.
-* `armv-sync`: Synchronize arms & turn on visual sensors.
-* `armv-rec`: Record Koch robot arms and visual data.
-* `train`: Train your custom dataset with the selected model.
-* `deploy`: Deploy your custom model on real robot.
-
->[!TIP]
-These scripts are under `/docker/entrypoint`.
-
-$\;$
+<br/>
 
 ##  <div align="center"> ⚠️ Issues ⚠️ </div>
 
-Before posting issues, please ensure you have attempted the troubleshooting steps outlined in [Common Errors and Solutions](/assets/README-error.md).
+Before posting issues, please ensure you have attempted the troubleshooting steps outlined in [Common Errors & Solutions.md](/assets/README-error.md).
