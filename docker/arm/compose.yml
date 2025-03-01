@@ -6,7 +6,7 @@ x-common-settings: &common
     context: .  
     dockerfile: Dockerfile
     target: release
-  image: hrcnthu/lerobot-koch-actpp:gpu
+  image: hrcnthu/koch-act:gpu-arm
 
   volumes:
     # GUI
@@ -65,42 +65,42 @@ x-gpu-settings: &gpu
 services:
   raw:
     <<: [*common, *gpu]
-    container_name: koch-actpp-raw
+    container_name: koch-act-raw
     command: ["/bin/bash"]
 
 
   ws-build:
     <<: [*common, *gpu]
-    container_name: koch-actpp-ws-build
+    container_name: koch-act-ws-build
     entrypoint: ["/bin/bash", "-c", 
                   "/root/entrypoint/symlinks.sh; /root/entrypoint/ws-build.sh"]
 
 
   arm-cali:
     <<: [*common, *gpu]
-    container_name: koch-actpp-arm-cali
+    container_name: koch-act-arm-cali
     entrypoint: ["/bin/bash", "-c", 
                   "/root/entrypoint/symlinks.sh; /root/entrypoint/arm-cali.sh"]
 
   arm-sync:
     <<: [*common, *gpu]
-    container_name: koch-actpp-arm-sync
+    container_name: koch-act-arm-sync
     entrypoint: ["/bin/bash", "-c", 
                   "/root/entrypoint/symlinks.sh; /root/entrypoint/arm-sync.sh"]
 
   
   armv-rec:
     <<: [*common, *gpu]
-    container_name: koch-actpp-armv-rec
+    container_name: koch-act-armv-rec
     entrypoint: ["/bin/bash", "-c", 
                   "/root/entrypoint/symlinks.sh", "/root/entrypoint/armv-rec.sh"]
 
 
-  actpp-train:
+  act-train:
     <<: [*common, *gpu]
-    container_name: koch-actpp-actpp-train
+    container_name: koch-act-train
   
 
-  actpp-deploy:
+  act-deploy:
     <<: [*common, *gpu]
-    container_name: koch-actpp-actpp-deploy
+    container_name: koch-act-deploy

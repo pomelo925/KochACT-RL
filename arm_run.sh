@@ -18,36 +18,36 @@ fi
 # Run docker compose
 case "$1" in
   raw)
-    cd docker/gpu
-    docker compose -p koch-actpp up raw -d
+    cd docker/arm
+    docker compose -p koch-act up raw -d
     ;;
   ws-build)
-    cd docker/gpu
-    docker compose -p koch-actpp up ws-build -d
+    cd docker/arm
+    docker compose -p koch-act up ws-build -d
     ;;
   arm-cali)
-    cd docker/gpu
-    docker compose -p koch-actpp up arm-cali -d
+    cd docker/arm
+    docker compose -p koch-act up arm-cali -d
     ;;
   arm-sync)
-    cd docker/gpu
-    docker compose -p koch-actpp up arm-sync -d
+    cd docker/arm
+    docker compose -p koch-act up arm-sync -d
     ;;
   armv-sync)
-    cd docker/gpu
-    docker compose -p koch-actpp up armv-sync -d
+    cd docker/arm
+    docker compose -p koch-act up armv-sync -d
     ;;
   armv-rec)
-    cd docker/gpu
-    docker compose -p koch-actpp up armv-rec -d
+    cd docker/arm
+    docker compose -p koch-act up armv-rec -d
     ;;
   train)
-    cd docker/gpu
-    docker compose -p koch-actpp up train -d
+    cd docker/arm
+    docker compose -p koch-act up train -d
     ;;
   deploy)
-    cd docker/gpu
-    docker compose -p koch-actpp up deploy -d
+    cd docker/arm
+    docker compose -p koch-act up deploy -d
     ;;
   *)
     echo "Invalid argument: $1"
