@@ -19,35 +19,35 @@ fi
 case "$1" in
   raw)
     cd docker/arm
-    docker compose -p koch-act up raw -d
+    docker-compose -p koch-act up raw -d
     ;;
   ws-build)
     cd docker/arm
-    docker compose -p koch-act up ws-build -d
+    docker-compose -p koch-act up ws-build -d
     ;;
   arm-cali)
     cd docker/arm
-    docker compose -p koch-act up arm-cali -d
+    docker-compose -p koch-act up arm-cali -d
     ;;
   arm-sync)
     cd docker/arm
-    docker compose -p koch-act up arm-sync -d
+    docker-compose -p koch-act up arm-sync -d
     ;;
   armv-sync)
     cd docker/arm
-    docker compose -p koch-act up armv-sync -d
+    docker-compose -p koch-act up armv-sync -d
     ;;
   armv-rec)
     cd docker/arm
-    docker compose -p koch-act up armv-rec -d
+    docker-compose -p koch-act up armv-rec -d
     ;;
   train)
     cd docker/arm
-    docker compose -p koch-act up train -d
+    docker-compose -p koch-act up train -d
     ;;
   deploy)
     cd docker/arm
-    docker compose -p koch-act up deploy -d
+    docker-compose -p koch-act up deploy -d
     ;;
   *)
     echo "Invalid argument: $1"

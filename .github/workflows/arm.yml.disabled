@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main, pomelo925 ]
     paths:
-      - docker/gpu/Dockerfile
+      - docker/ar/Dockerfile
       - .github/workflows/arm.yml
 
 jobs:
