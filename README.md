@@ -55,4 +55,7 @@ This repository is built on the [lerobot](https://github.com/hrc-pme/lerobot/tre
 
 ##  <div align="center"> Issues </div>
 
-<div align="center"> Before posting issues, please check the troubleshooting steps in [Common Errors & Solutions.md](/assets/README-error.md). </div>
+<p align="center">
+  Before posting issues, please check the troubleshooting steps in  
+  <a href="/assets/README-error.md">Common Errors & Solutions.md</a>.
+</p>
