@@ -39,7 +39,7 @@ This repository is built on the [lerobot](https://github.com/hrc-pme/lerobot/tre
    ```
 
    <details> 
-      <summary> spoiler Mode Options </summary>
+      <summary> Mode Options </summary>
 
       - `raw`:        Enter the env without running any node.  
       - `ws-build`:   Colcon build ROS2 workspace.  
@@ -53,6 +53,6 @@ This repository is built on the [lerobot](https://github.com/hrc-pme/lerobot/tre
 
 <br/>
 
-##  <div align="center"> ⚠️ Issues ⚠️ </div>
+##  <div align="center"> Issues </div>
 
-Before posting issues, please ensure you have attempted the troubleshooting steps outlined in [Common Errors & Solutions.md](/assets/README-error.md).
+Before posting issues, please check the troubleshooting steps in [Common Errors & Solutions.md](/assets/README-error.md).
