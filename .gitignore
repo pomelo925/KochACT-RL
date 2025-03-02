@@ -11,6 +11,3 @@ log/
 
 # cache 
 __pycache__/
-
-# bags
-bags/
