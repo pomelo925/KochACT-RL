@@ -89,7 +89,8 @@ RUN git clone https://github.com/hrc-pme/lerobot.git /root/lerobot && \
 WORKDIR /root/lerobot
 RUN apt-get update && apt-get upgrade pip -y && \
     pip install --upgrade pip && \
-    pip install --no-cache-dir --ignore-installed ".[dynamixel]" 
+    pip install --no-cache-dir --ignore-installed ".[dynamixel]" && \
+    pip install "numpy<=2"
 
 WORKDIR /root
 RUN rm -rf lerobot
@@ -131,7 +132,11 @@ FROM ros-humble-base AS release
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-## Fix some minor issues
-# RUN pip3 install setuptools==58.2.0
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN echo 'export PYTHONPATH="/root/lerobot:$PYTHONPATH"' >> ~/.bashrc
+
 
 CMD ["/bin/bash"]

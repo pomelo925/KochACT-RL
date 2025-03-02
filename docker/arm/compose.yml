@@ -31,8 +31,6 @@ x-common-settings: &common
     #  you can comment out this line, 
     #  if you don't need to upload dataset to huggingface.
     - ../../.git/:/root/.git
-  tmpfs:
-    - /root/ros2-ws/log
   
   environment:
     - DISPLAY=${DISPLAY}
@@ -72,28 +70,24 @@ services:
   ws-build:
     <<: [*common, *gpu]
     container_name: koch-act-ws-build
-    entrypoint: ["/bin/bash", "-c", 
-                  "/root/entrypoint/symlinks.sh; /root/entrypoint/ws-build.sh"]
+    entrypoint: ["/root/entrypoint/ws-build.sh", "&&", "/bin/bash"]
 
 
   arm-cali:
     <<: [*common, *gpu]
     container_name: koch-act-arm-cali
-    entrypoint: ["/bin/bash", "-c", 
-                  "/root/entrypoint/symlinks.sh; /root/entrypoint/arm-cali.sh"]
+    entrypoint: ["/root/entrypoint/arm-cali.sh"]
 
   arm-sync:
     <<: [*common, *gpu]
     container_name: koch-act-arm-sync
-    entrypoint: ["/bin/bash", "-c", 
-                  "/root/entrypoint/symlinks.sh; /root/entrypoint/arm-sync.sh"]
+    entrypoint: ["/root/entrypoint/arm-sync.sh"]
 
   
   armv-rec:
     <<: [*common, *gpu]
     container_name: koch-act-armv-rec
-    entrypoint: ["/bin/bash", "-c", 
-                  "/root/entrypoint/symlinks.sh", "/root/entrypoint/armv-rec.sh"]
+    entrypoint: ["/root/entrypoint/armv-rec.sh"]
 
 
   act-train:
