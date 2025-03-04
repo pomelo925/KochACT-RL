@@ -90,7 +90,7 @@ WORKDIR /root/lerobot
 RUN apt-get update && apt-get upgrade pip -y && \
     pip install --upgrade pip && \
     pip install --no-cache-dir --ignore-installed ".[dynamixel]" && \
-    pip install "numpy<=2" && \
+    pip install "numpy<=2" decord && \
     pip uninstall lerobot
 
 WORKDIR /root
@@ -137,7 +137,7 @@ RUN apt-get update && apt-get install -y \
     ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
-RUN echo 'export PYTHONPATH="/root/lerobot:$PYTHONPATH"' >> ~/.bashrc
+RUN echo 'export PYTHONPATH="/usr/local/lib/python3.10/dist-packages:/root/lerobot:$PYTHONPATH"' >> ~/.bashrc
 
 
 CMD ["/bin/bash"]

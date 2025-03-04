@@ -87,13 +87,15 @@ RUN git clone https://github.com/hrc-pme/lerobot.git /root/lerobot && \
     git checkout 963738d
 
 WORKDIR /root/lerobot
+
 RUN apt-get update && apt-get upgrade pip -y && \
     pip install --upgrade pip && \
-    pip install --no-cache-dir --ignore-installed ".[dynamixel]" 
+    pip install --no-cache-dir --ignore-installed ".[dynamixel]" && \
+    pip install "numpy<=2" decord && \
+    pip uninstall lerobot
 
 WORKDIR /root
 RUN rm -rf lerobot
-
 
 ################################################################################################
 # - ROS Humble & Realsense Installation stage
@@ -126,7 +128,12 @@ RUN apt-get update && apt-get install -y \
 
 FROM ros-humble-base AS release
 
-## Fix some minor issues
-# RUN pip3 install setuptools==58.2.0
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN echo 'export PYTHONPATH="/usr/local/lib/python3.10/dist-packages:/root/lerobot:$PYTHONPATH"' >> ~/.bashrc
 
 CMD ["/bin/bash"]
