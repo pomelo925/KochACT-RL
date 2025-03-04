@@ -90,7 +90,8 @@ WORKDIR /root/lerobot
 RUN apt-get update && apt-get upgrade pip -y && \
     pip install --upgrade pip && \
     pip install --no-cache-dir --ignore-installed ".[dynamixel]" && \
-    pip install "numpy<=2"
+    pip install "numpy<=2" && \
+    pip uninstall lerobot
 
 WORKDIR /root
 RUN rm -rf lerobot
