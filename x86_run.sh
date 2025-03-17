@@ -11,7 +11,7 @@ chmod +x docker/entrypoint/*
 
 # Check validity of args
 if [ "$#" -ne 1 ]; then
-  echo "Usage: $0 {raw|ws-build|arm-cali|arm-sync|armv-sync|armv-rec|train|deploy}"
+  echo "Usage: $0 {raw|ws-build|arm-cali|arm-sync|armv-sync|rec|train|deploy}"
   exit 1
 fi
 
@@ -37,7 +37,7 @@ case "$1" in
     cd docker/x86
     docker compose -p koch-act up armv-sync -d
     ;;
-  armv-rec)
+  rec)
     cd docker/x86
     docker compose -p koch-act up armv-rec -d
     ;;
@@ -51,7 +51,7 @@ case "$1" in
     ;;
   *)
     echo "Invalid argument: $1"
-    echo "Usage: $0 {raw|ws-build|arm-cali|arm-sync|armv-sync|armv-rec|train|deploy}"
+    echo "Usage: $0 {raw|ws-build|arm-cali|arm-sync|armv-sync|rec|train|deploy}"
     exit 1
     ;;
 esac
