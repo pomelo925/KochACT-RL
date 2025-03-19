@@ -69,6 +69,7 @@ RUN apt-get update && apt-get install -y \
     python3-rosdep \
     ros-$ROS_DISTRO-ros-base \
     ros-$ROS_DISTRO-image-transport-plugins \
+    ros-$ROS_DISTRO-realsense2* && \
     ros-$ROS_DISTRO-librealsense2* && \
     rosdep init && rosdep update && \
     echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc && \

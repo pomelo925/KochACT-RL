@@ -47,11 +47,11 @@ x-workspace-settings: &workspace
     - /etc/udev:/etc/udev:ro
 
     # Workspace
-    - ./entrypoint:/entrypoint
-    - ../koch-lerobot:/koch-lerobot
-    - ../ros2-ws/build:/ros2-ws/build
-    - ../ros2-ws/install:/ros2-ws/install
-    - ../ros2-ws/src:/ros2-ws/src
+    - ./entrypoint:/entrypoint:rw
+    - ../koch-lerobot:/koch-lerobot:rw
+    - ../ros2-ws/build:/ros2-ws/build:rw
+    - ../ros2-ws/install:/ros2-ws/install:rw
+    - ../ros2-ws/src:/ros2-ws/src:rw
     # Note: you can comment out this line, 
     # if you don't need to upload dataset to huggingface.
     - ../.git/:/.git  # mount .git to setup the git credentials
