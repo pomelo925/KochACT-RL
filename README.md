@@ -1,6 +1,10 @@
-# <div align="center"> lerobot-koch-actpp </div>
+# <div align="center"> KochACT-RL </div>
 
-This repository is built on the [lerobot](https://github.com/hrc-pme/lerobot/tree/33724a273dfa3a62b845cbbb030b21b71fc5d12b) framework to establish a software environment for the Koch arm and its peripheral devices.
+<p align="cetner">
+
+This repository is built on the [lerobot](https://github.com/hrc-pme/lerobot/tree/33724a273dfa3a62b845cbbb030b21b71fc5d12b) framework for the Koch arm and its peripheral devices.
+
+</p>
 
 <br/>
 
@@ -25,14 +29,7 @@ This repository is built on the [lerobot](https://github.com/hrc-pme/lerobot/tre
 
 2. Follow [UdevRules.md](/assets/README-udev.md) to setup Koch's udev rules.
 
-3. (Optional) [Setup your huggingface token](https://huggingface.co/docs/hub/security-tokens) in `.env` file.
-   
-   ```bash
-   cd /docker/entrypoint
-   cp .env.example .env
-   ```
-
-4. Start the container.
+3. Start the container.
 
    ```bash
    ./gpu_run.sh raw
@@ -41,14 +38,14 @@ This repository is built on the [lerobot](https://github.com/hrc-pme/lerobot/tre
    <details> 
       <summary> Mode Options </summary>
 
-      - `raw`:        Enter the env without running any node.  
-      - `ws-build`:   Colcon build ROS2 workspace.  
-      - `arm-cali`:   Calibrate Koch Robot Arms.  
-      - `arm-sync`:   Synchronize Koch.  
-      - `armv-sync`:  Synchronize Koch & launch Realsense.  
-      - `armv-rec`:   Record Koch and Realsense.  
-      - `train`:      Train custom dataset.  
-      - `deploy`:     Deploy custom model.  
+      - `raw`: Launch container without running any service.
+      - `build`: Build ROS2 workspace.
+      - `cali`: Calibrate Koch Robot Arm.
+      - `teleop`: Teleoperate Koch Robot Arm.
+      - `cam`: Launch all camera nodes.
+      - `sync`: Teleoperate, launch camera nodes, and synchronize related topics.
+      - `train`: Train with custom dataset.
+      - `deploy`: Deploy trained model.
    </details>
 
 <br/>

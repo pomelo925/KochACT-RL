@@ -1,7 +1,7 @@
-[submodule "kochArm-lerobot"]
-	path = kochArm-lerobot
-	url = git@github.com:pomelo925/kochArm-lerobot.git
-
 [submodule "ros2-ws/src/koch-ros2-wrapper"]
 	path = ros2-ws/src/koch-ros2-wrapper
 	url = git@github.com:pomelo925/koch-ros2-wrapper.git
+
+[submodule "koch-lerobot"]
+	path = koch-lerobot
+	url = git@github.com:pomelo925/koch-lerobot.git

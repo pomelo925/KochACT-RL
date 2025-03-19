@@ -15,21 +15,24 @@ ARG USERNAME=hrc
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 SHELL ["/bin/bash", "-c"]
 
 
 ################################################################################################
-# - Python Building stage
-#   - In this stage, I will install and set python3.8.10 as the default python version.
-#   - Building tools will be removed after this stage.
+# - Python 3.10 Installation stage
+#   - In this stage, I will install python3.10 and the required dependencies.
+#   - Building tools will be removed after installation.
 ################################################################################################
 
-FROM base AS python-build
-
-ARG DEBIAN_FRONTEND=noninteractive
+FROM base AS python3.10
 
 RUN apt-get update && apt-get install -y \
-    cmake \ 
+    python3.10 \
+    python3.10-dev \
+    python3.10-distutils \
+    python3.10-venv \
     curl \
     libbz2-dev \
     libffi-dev \
@@ -43,69 +46,17 @@ RUN apt-get update && apt-get install -y \
     zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Build Python 3.10.0 from source
-RUN wget https://www.python.org/ftp/python/3.10.0/Python-3.10.0.tgz && \
-    tar -xvf Python-3.10.0.tgz && \
-    cd Python-3.10.0 && \
-    ./configure --enable-optimizations && \
-    make -j$(nproc) && \
-    make altinstall && \
-    cd .. && rm -rf Python-3.10.0 Python-3.10.0.tgz
+# Set python3.10 as the default
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1
 
 
-################################################################################################
-# - Python Dependencies Installation stage
-#   - In this stage, I will install all the python dependencies.
-#       - lerobot github repository: https://github.com/hrc-pme/lerobot/blob/963738d983480b1cd19295b2cb0630d0cf5c5bb5/examples/7_get_started_with_real_robot.md
-################################################################################################
-
-FROM base AS python-dep
-
-ARG DEBIAN_FRONTEND=noninteractive
-
-COPY --from=python-build /usr/local/lib/python3.10 /usr/local/lib/python3.10
-COPY --from=python-build /usr/local/bin/python3.10 /usr/local/bin/python3.10
-COPY --from=python-build /usr/local/bin/pip3.10 /usr/local/bin/pip3
-
-
-# Set Python 3.10.0 as default
-RUN ln -sf /usr/local/bin/python3.10 /usr/bin/python3 && \
-    ln -sf /usr/local/bin/pip3.10 /usr/bin/pip
-
-# Install build tools 
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    git \
-    pip \
-    python3-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install lerobot dependencies
-RUN git clone https://github.com/hrc-pme/lerobot.git /root/lerobot && \
-    cd /root/lerobot && \
-    git checkout 963738d
-
-WORKDIR /root/lerobot
-RUN apt-get update && apt-get upgrade pip -y && \
-    pip install --upgrade pip && \
-    pip install --no-cache-dir --ignore-installed ".[dynamixel]" && \
-    pip install "numpy<=2" decord && \
-    pip uninstall lerobot
-
-WORKDIR /root
-RUN rm -rf lerobot
-
-
-################################################################################################
+###############################################################################################
 # - ROS Humble & Realsense Installation stage
 #   - In this stage, I will install ROS2 humble and Intel Realsense dependencies.
 ################################################################################################
 
+FROM python3.10 AS ros-humble
 
-FROM python-dep AS ros-humble-base
-
-ARG DEBIAN_FRONTEND=noninteractive
 ARG ROS_DISTRO=humble
 
 RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o \
@@ -121,6 +72,7 @@ RUN apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-librealsense2* && \
     rosdep init && rosdep update && \
     echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc && \
+    echo "export ROS_LOG_DIR=/dev/null" >> ~/.bashrc && \
     rm -rf /var/lib/apt/lists/*
 
 
@@ -129,15 +81,23 @@ RUN apt-get update && apt-get install -y \
 #   - In this stage, I will install some developing tools.
 ################################################################################################
 
-FROM ros-humble-base AS release
+FROM ros-humble AS dev-tools
 
-ARG DEBIAN_FRONTEND=noninteractive
+# TODO: Install lerobot dependencies
 
-RUN apt-get update && apt-get install -y \
-    ffmpeg \
-    && rm -rf /var/lib/apt/lists/*
 
-RUN echo 'export PYTHONPATH="/usr/local/lib/python3.10/dist-packages:/root/lerobot:$PYTHONPATH"' >> ~/.bashrc
+WORKDIR /root
+RUN rm -rf lerobot
+
+
+################################################################################################
+# - Release Stage
+#   - In this stage, I will configure the final image for release.
+################################################################################################
+
+FROM dev-tools AS release
+
+# RUN echo 'export PYTHONPATH="/usr/local/lib/python3.10/dist-packages:/root/lerobot:$PYTHONPATH"' >> ~/.bashrc
 
 
 CMD ["/bin/bash"]
