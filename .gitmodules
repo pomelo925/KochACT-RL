@@ -1,17 +1,7 @@
-# Lerobot
-[submodule "lerobot"]
-	path = lerobot
-	url = git@github.com:hrc-pme/lerobot.git
+[submodule "kochArm-lerobot"]
+	path = kochArm-lerobot
+	url = git@github.com:pomelo925/kochArm-lerobot.git
 
-# ROS2 packages
-[submodule "ros2-ws/src/topic_tools"]
-	path = ros2-ws/src/topic_tools
-	url = git@github.com:hrc-pme/topic_tools.git
-
-[submodule "ros2-ws/src/koch_ros2_wrapper"]
-	path = ros2-ws/src/koch_ros2_wrapper
-	url = git@github.com:hrc-pme/koch_ros2_wrapper.git
-
-[submodule "ros2-ws/src/realsense-ros"]
-	path = ros2-ws/src/realsense-ros
-	url = git@github.com:hrc-pme/realsense-ros.git
+[submodule "ros2-ws/src/koch-ros2-wrapper"]
+	path = ros2-ws/src/koch-ros2-wrapper
+	url = git@github.com:pomelo925/koch-ros2-wrapper.git
