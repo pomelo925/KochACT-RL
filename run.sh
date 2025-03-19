@@ -29,7 +29,7 @@ fi
 cd docker
 case "$1" in
   raw|build|cali|teleop|cam|sync|train|deploy)
-    docker compose -p KochACT-RL up "$1" -d
+    docker compose -p kochact-rl up $1 -d
     ;;
   *)
     echo "Invalid argument: $1"

@@ -84,10 +84,15 @@ RUN apt-get update && apt-get install -y \
 FROM ros-humble AS dev-tools
 
 # TODO: Install lerobot dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    g++ \
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
-
-WORKDIR /root
-RUN rm -rf lerobot
+WORKDIR /
+# RUN rm -rf lerobot
 
 
 ################################################################################################

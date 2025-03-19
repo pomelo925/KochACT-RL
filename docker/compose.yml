@@ -6,21 +6,8 @@ x-common-settings: &common
   network_mode: host
   privileged: true
   stop_grace_period: 1s
-  
   devices:
     - /dev:/dev
-
-  volumes:
-    # GUI
-    - $HOME/.Xauthority:/.Xauthority:ro
-    - /tmp/.X11-unix:/tmp/.X11-unix:ro
-    # ROS2 container communication
-    - /dev/shm:/dev/shm:rw
-    # Udev rules 
-    - /dev:/dev:rw
-    - /run/udev:/run/udev:ro
-    - /etc/udev:/etc/udev:ro
-
   environment:
     - DISPLAY=${DISPLAY}
   
@@ -48,18 +35,26 @@ x-workspace-settings: &workspace
     dockerfile: Dockerfile
     target: release
   image: hrcnthu/kochact-rl:x86-gpu
-
   volumes:
-    # workspace 
-    - ../entrypoint:/entrypoint
-    - ../../kochArm-lerobot:/kochArm-lerobot
-    - ../../ros2-ws/build:/ros2-ws/build
-    - ../../ros2-ws/install:/os2-ws/install
-    - ../../ros2-ws/src:/ros2-ws/src
+    # GUI
+    - $HOME/.Xauthority:/.Xauthority:ro
+    - /tmp/.X11-unix:/tmp/.X11-unix:ro
+    # ROS2 container communication
+    - /dev/shm:/dev/shm:rw
+    # Udev rules 
+    - /dev:/dev:rw
+    - /run/udev:/run/udev:ro
+    - /etc/udev:/etc/udev:ro
 
-    #  Note: you can comment out this line, 
-    #  if you don't need to upload dataset to huggingface.
-    - ../../.git/:/.git     # mount .git to setup the git credentials
+    # Workspace
+    - ./entrypoint:/entrypoint
+    - ../koch-lerobot:/koch-lerobot
+    - ../ros2-ws/build:/ros2-ws/build
+    - ../ros2-ws/install:/ros2-ws/install
+    - ../ros2-ws/src:/ros2-ws/src
+    # Note: you can comment out this line, 
+    # if you don't need to upload dataset to huggingface.
+    - ../.git/:/.git  # mount .git to setup the git credentials
 
 
 ##############################
