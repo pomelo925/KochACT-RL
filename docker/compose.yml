@@ -47,7 +47,7 @@ x-workspace-settings: &workspace
     context: .  
     dockerfile: Dockerfile
     target: release
-  image: hrcnthu/KochRL-ACT:x86-gpu
+  image: hrcnthu/kochact-rl:x86-gpu
 
   volumes:
     # workspace 
