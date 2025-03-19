@@ -1,9 +1,7 @@
 # <div align="center"> KochACT-RL </div>
 
 <p align="center">
-
-This repository is built on the [lerobot](https://github.com/hrc-pme/lerobot/tree/33724a273dfa3a62b845cbbb030b21b71fc5d12b) framework for the Koch arm and its peripheral devices.
-
+This repository is built on lerobot framework for the Koch arm and its peripheral devices.
 </p>
 
 <br/>
